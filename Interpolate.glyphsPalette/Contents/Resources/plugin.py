@@ -1,19 +1,15 @@
 import objc
 from AppKit import NSBezierPath, NSColor, NSPoint
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
-from fontTools.varLib.models import VariationModel, normalizeValue, piecewiseLinearMap
+from fontTools.varLib.models import VariationModel, normalizeValue
 from GlyphsApp import (
     DRAWBACKGROUND,
     UPDATEINTERFACE,
-    UPDATEEDITVIEWFRAME,
     Glyphs,
-    GSAnchor,
-    GSComponent,
     GSEditViewController,
-    GSNode,
 )
 from GlyphsApp.plugins import PalettePlugin
-from vanilla import Button, EditText, Group, List, Slider, TextBox, Window
+from vanilla import EditText, Group, Slider, TextBox, Window
 
 KEY = "co.uk.corvelsoftware.interpolate"
 
@@ -83,7 +79,7 @@ class Interpolate(PalettePlugin):
 
     @objc.python_method
     def setup_axes(self):
-        newframe = Group((0, 0, 160, 120 + 10))
+        newframe = Group("auto")
         objects = []
         self.axis_min_max = {}
         for i, axis in enumerate(Glyphs.font.axes):
