@@ -243,7 +243,7 @@ class Interpolate(PalettePlugin):
         currentTab = sender.object()
         if not isinstance(currentTab, GSEditViewController):
             return
-        if not Glyphs.font.selectedLayers:
+        if not Glyphs.font.selectedLayers or len(Glyphs.font.masters) == 1:
             return
         if (
             not hasattr(self, "current_glyph")
