@@ -48,7 +48,6 @@ class AxisSlider(Group):
         return self.slider.get()
 
     def update_pos_from_text(self, sender):
-        print(float(sender.get()))
         try:
             self.slider.set(float(sender.get()))
             self.callback(self.axis, float(sender.get()))
@@ -163,7 +162,7 @@ class Interpolate(PalettePlugin):
         current_layer_id = current_layer.layerId
         # Rebuild the .glyph_points array as efficiently as possible
         for ix, layer in enumerate(current_layer.parent.layers):
-            if not layer.associatedMasterId:
+            if not Glyphs.font.masters[layer.layerId]:
                 continue  # XXX
             if ix not in self.glyph_points or layer.layerId == current_layer_id:
                 self.glyph_points[ix] = []
@@ -178,8 +177,12 @@ class Interpolate(PalettePlugin):
                             self.glyph_points[ix].append((seg[3].x, seg[3].y))
 
                 self.glyph_points[ix] = GlyphCoordinates(self.glyph_points[ix])
+
+        all_points = list(self.glyph_points.values())
+        if any(len(points) != len(all_points[0]) for points in all_points):
+            return
         interpolated_points = self.model.interpolateFromValuesAndScalars(
-            list(self.glyph_points.values()),
+            all_points,
             self.master_scalars,
         )
 
