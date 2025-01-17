@@ -198,6 +198,13 @@ class Interpolate(PalettePlugin):
                 if len(seg) == 2:
                     line = NSPoint(*next(point_iter))
                     displaypath.lineToPoint_(line)
+                elif len(seg) == 3:
+                    cp1 = NSPoint(*next(point_iter))
+                    dest = NSPoint(*next(point_iter))
+                    displaypath.curveToPoint_controlPoint_(
+                        dest,
+                        cp1,
+                    )
                 else:
                     cp1 = NSPoint(*next(point_iter))
                     cp2 = NSPoint(*next(point_iter))
