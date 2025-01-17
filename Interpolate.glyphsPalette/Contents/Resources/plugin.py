@@ -116,7 +116,7 @@ class Interpolate(PalettePlugin):
 
         locations = []
         for layer in layer.parent.layers:
-            if not layer.associatedMasterId:
+            if not Glyphs.font.masters[layer.layerId]:
                 continue  # XXX
             master = Glyphs.font.masters[layer.associatedMasterId]
             normalized_location = {}
