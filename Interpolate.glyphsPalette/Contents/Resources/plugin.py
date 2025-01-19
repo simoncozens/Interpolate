@@ -181,6 +181,10 @@ class Interpolate(PalettePlugin):
         all_points = list(self.glyph_points.values())
         if any(len(points) != len(all_points[0]) for points in all_points):
             return
+        print("Master scalars: ", self.master_scalars)
+        print("Values: ", len(all_points))
+        if len(self.master_scalars) != len(all_points):
+            return
         interpolated_points = self.model.interpolateFromValuesAndScalars(
             all_points,
             self.master_scalars,
